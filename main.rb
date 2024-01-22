@@ -14,10 +14,6 @@ def initDB()
   db.close
 end
 
-# idk what should i do
-# always be connected to 
-# db, or only connect when need 2
-# then disconnect when no longer needed 
 def newAct()
   db = SQLite3::Database.open "time.db"
  
