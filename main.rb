@@ -1,11 +1,14 @@
 require 'sqlite3'
 
-def initDB()
-  # use __dir__
-  # db File.join(__dir__, 'time.db')
-  # should i make function that returns SQLite3 object
-  db = SQLite3::Database.open "time.db"
+def connectDB()
+  # i learn this when i made the cli-dict 
+  currentDir = __dir__
+  db_path = File.join(currentDir, "time.db")
+  return SQLite3::Database.open db_path
+end
 
+def initDB()
+  db = connectDB()
   db.execute <<-SQL
     CREATE TABLE IF NOT EXISTS act(
       id   INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -18,13 +21,13 @@ def initDB()
 end
 
 def newAct()
-  db = SQLite3::Database.open "time.db"
  
   puts "Enter name of new activity"
   puts "Make sure its not already in db"
   print "> "
   name = gets().chomp
 
+  db = connectDB()
   db.execute("INSERT INTO act (name, time)
               VALUES (?, ?)", [name, 0])
 
@@ -34,7 +37,6 @@ end
 # so funny i get to use this from
 # my own gist 
 # https://gist.github.com/MrBocch/e07e7397005a1c261d77520d7d2a7eee
-
 def getTime
   # if you already done an activity
   print "Hours: "
@@ -48,13 +50,11 @@ def getTime
 end
 
 def doing()
-  db = SQLite3::Database.open "time.db"
 
   puts "What do you want to do?"
   puts "Select by id"
 
   stats()
-  db.close
 
   # prevent people from insert wrong thing
   id = gets().chomp().to_i
@@ -73,7 +73,7 @@ def doing()
     # TODO
   end
 
-  db = SQLite3::Database.open "time.db"
+  db = connectDB()
   db.execute("UPDATE act 
               SET time = time + #{time}
               WHERE id = #{id};"
@@ -82,9 +82,9 @@ def doing()
 end
 
 def stats()
-  db = SQLite3::Database.open "time.db"
   puts "id | Activity | Time in Seconds"
   # i want to print stats in H:M:S
+  db = connectDB()
   db.execute("SELECT * FROM act") do |row|
     p row
   end
@@ -111,7 +111,7 @@ while stay do
   in 3
     doing()
   in 4
-    return 
+    stay = false
   else
     puts "Dont recognize that\n\n"
 
