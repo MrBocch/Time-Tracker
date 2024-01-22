@@ -1,6 +1,9 @@
 require 'sqlite3'
 
 def initDB()
+  # use __dir__
+  # db File.join(__dir__, 'time.db')
+  # should i make function that returns SQLite3 object
   db = SQLite3::Database.open "time.db"
 
   db.execute <<-SQL
@@ -28,6 +31,22 @@ def newAct()
   db.close 
 end
 
+# so funny i get to use this from
+# my own gist 
+# https://gist.github.com/MrBocch/e07e7397005a1c261d77520d7d2a7eee
+
+def getTime
+  # if you already done an activity
+  print "Hours: "
+  h = gets.chomp!.to_i
+  print "Minutes: "
+  m = gets.chomp!.to_i
+  print "Seconds: "
+  s = gets.chomp!.to_i
+  # returns total time in seconds
+  return s + (m*60) + (h*3600)
+end
+
 def doing()
   db = SQLite3::Database.open "time.db"
 
@@ -41,11 +60,20 @@ def doing()
   id = gets().chomp().to_i
 
   # pomodoro thing
-  puts "Insert time in seconds"
-  time = gets().chomp().to_i
-  db = SQLite3::Database.open "time.db"
+  puts "Would like to do pomodoro thing (p)"
+  puts "Or Insert time manually? (m)"
+  print "> "
+  choice = gets.chomp
+  time = 0
+  # check if people insert incorrect thing
+  if choice == 'm'
+    time = getTime() 
+  end
+  if choice == 'p'
+    # TODO
+  end
 
-  # check if table exists
+  db = SQLite3::Database.open "time.db"
   db.execute("UPDATE act 
               SET time = time + #{time}
               WHERE id = #{id};"
@@ -55,7 +83,6 @@ end
 
 def stats()
   db = SQLite3::Database.open "time.db"
-  # how to check if table exist?
   puts "id | Activity | Time in Seconds"
   # i want to print stats in H:M:S
   db.execute("SELECT * FROM act") do |row|
