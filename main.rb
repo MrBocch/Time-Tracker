@@ -1,11 +1,8 @@
 require 'sqlite3'
 
-# idk what should i do
-# always be connected to 
-# db, or only connect when need 2
-# then disconnect when no longer needed 
-def newAct()
+def initDB()
   db = SQLite3::Database.open "time.db"
+
   db.execute <<-SQL
     CREATE TABLE IF NOT EXISTS act(
       id   INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -13,7 +10,17 @@ def newAct()
       time INT 
     );
   SQL
-  
+
+  db.close
+end
+
+# idk what should i do
+# always be connected to 
+# db, or only connect when need 2
+# then disconnect when no longer needed 
+def newAct()
+  db = SQLite3::Database.open "time.db"
+ 
   puts "Enter name of new activity"
   puts "Make sure its not already in db"
   print "> "
@@ -62,7 +69,7 @@ def stats()
   db.close
 end
 
-
+initDB()
 stay = true 
 while stay do 
   puts "(1) New Activity"
