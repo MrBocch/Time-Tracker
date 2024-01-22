@@ -9,13 +9,13 @@ end
 
 def initDB()
   db = connectDB()
-  db.execute <<-SQL
+  db.execute("
     CREATE TABLE IF NOT EXISTS act(
       id   INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT NOT NULL,
       time INT 
-    );
-  SQL
+    );"
+  )
 
   db.close
 end
@@ -38,7 +38,6 @@ end
 # my own gist 
 # https://gist.github.com/MrBocch/e07e7397005a1c261d77520d7d2a7eee
 def getTime
-  # if you already done an activity
   print "Hours: "
   h = gets.chomp!.to_i
   print "Minutes: "
