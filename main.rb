@@ -21,7 +21,6 @@ def initDB()
 end
 
 def newAct()
- 
   puts "Enter name of new activity"
   puts "Make sure its not already in db"
   print "> "
@@ -49,7 +48,6 @@ def getTime
 end
 
 def doing()
-
   puts "What do you want to do?"
   puts "Select by id"
 
@@ -80,15 +78,33 @@ def doing()
 
 end
 
+def secToHM(seconds)
+  hours = seconds / 3600
+  restm = seconds % 3600
+  minutes = restm / 60 
+  return hours, minutes
+end
+
 def stats()
   puts "id | Activity | Time in Seconds"
   # i want to print stats in H:M:S
   db = connectDB()
-  db.execute("SELECT * FROM act") do |row|
-    p row
+  rows = db.execute("SELECT * FROM act")
+  db.close
+
+  rows.each do |row|
+    id = row[0]
+    act = row[1]
+    h, m = secToHM(row[2])
+
+    # repeating my self alittle 
+    if h > 0
+      puts "#{id}  | #{act} | #{h} Hours, #{m} Minutes"
+    else 
+      puts "#{id}  | #{act} | #{m} Minutes"
+    end
   end
 
-  db.close
 end
 
 initDB()
