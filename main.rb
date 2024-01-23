@@ -86,22 +86,30 @@ def secToHM(seconds)
 end
 
 def stats()
-  puts "id | Activity | Time in Seconds"
-  # i want to print stats in H:M:S
   db = connectDB()
   rows = db.execute("SELECT * FROM act")
   db.close
 
+  rpad = rows.max{|a, b| a[1].size <=> b[1].size}[1].length
+
+  id = "id".ljust(3, " ")
+  activity = "Activity".ljust(rpad, " ")
+
+  header = "#{id} | #{activity} | Time"
+  lines = header.split("").map{|c| "-"}.join("")
+
+  puts header
+
   rows.each do |row|
-    id = row[0]
-    act = row[1]
+    id = row[0].to_s.ljust(3, " ")
+    act = row[1].ljust(rpad, " ") # so cool
     h, m = secToHM(row[2])
 
     # repeating my self alittle 
     if h > 0
-      puts "#{id}  | #{act} | #{h} Hours, #{m} Minutes"
+      puts "#{id} | #{act} | #{h} Hours, #{m} Minutes"
     else 
-      puts "#{id}  | #{act} | #{m} Minutes"
+      puts "#{id} | #{act} | #{m} Minutes"
     end
   end
 
