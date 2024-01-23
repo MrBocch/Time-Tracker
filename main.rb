@@ -118,6 +118,7 @@ end
 initDB()
 stay = true 
 while stay do 
+  puts "\n"
   puts "(1) New Activity"
   puts "(2) List Stats"
   puts "(3) Do Activity"
@@ -125,6 +126,7 @@ while stay do
 
   print "> "
   input = gets().chomp().to_i
+  puts "\n"
 
   case input  
   in 1
