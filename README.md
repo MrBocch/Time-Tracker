@@ -1,6 +1,6 @@
 # Time Tracker 
 
-A cli application that tracks
+A CLI application that tracks
 how much time you spent doing anything
 
 ![screenshot](screenshot.png)
