@@ -90,25 +90,17 @@ def stats()
   rows = db.execute("SELECT * FROM act")
   db.close
 
-  # make into a map :floor => ?
   floor = '─'
   wall = '│'
-  cross = '┼'
-  downt = '┬'
-  rt = '├' 
-  lt = '┤'
-  upt = '┴'
-  urightcorner = '┌'
-  brightcorner = '└'
-  uleftcorner = '┐'
-  bleftcorner = '┘'
+  tsign  = {:ut => '┴', :dt => '┬', :rt => '├', :lt => '┤', :cross => '┼'}
+  corner = {:tr => '┌', :tl => '┐', :br => '┘', :bl => '└'}
 
   rpad = rows.max{|a, b| a[1].size <=> b[1].size}[1].length
 
   id = "id".ljust(3, " ")
   activity = "Activity".ljust(rpad, " ")
 
-  header = "#{id} #{wall} #{activity} #{wall} Time"
+  header = "#{id} #{wall} #{activity} #{wall} Time" 
   # this wont work i have to insert the cross piece
   lines = header.split("").map{|c| floor}.join("")
 
