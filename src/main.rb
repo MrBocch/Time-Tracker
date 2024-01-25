@@ -107,6 +107,7 @@ def stats()
   rpad_id = rows.max{|a, b| a[0].to_s.size <=> b[0].to_s.size}[0].to_s.length
   rpad_id = [rpad_id, "id".length].max
   rpad_act = rows.max{|a, b| a[1].size <=> b[1].size}[1].length
+  rpad_act = [rpad_act, "Activity".length].max
   rpad_time = rows.max{|a, b| a[2].size <=> b[2].size}[2].length
 
   id = "id".ljust(rpad_id, " ")
