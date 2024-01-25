@@ -90,6 +90,11 @@ def stats()
   rows = db.execute("SELECT * FROM act")
   db.close
 
+  if rows.empty? 
+    puts "Please enter an activity first"
+    return
+  end
+
   0.upto(rows.length() -1) do |i|
     h, m = secToHM(rows[i][2])
     if h > 0
