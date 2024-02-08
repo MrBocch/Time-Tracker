@@ -109,11 +109,11 @@ def stats()
   rpad_act = rows.max{|a, b| a[1].size <=> b[1].size}[1].length
   rpad_act = [rpad_act, "Activity".length].max
   rpad_time = rows.max{|a, b| a[2].size <=> b[2].size}[2].length
-  rpad_time = [rpad_time, "Time"].max
+  rpad_time = [rpad_time, "Time".length].max
 
-  id = "id".ljust(rpad_id, " ")
-  activity = "Activity".ljust(rpad_act, " ")
-  time = "Time".ljust(rpad_time, " ")
+  id = "id".center(rpad_id, " ")
+  activity = "Activity".center(rpad_act, " ")
+  time = "Time".center(rpad_time, " ")
  
   floor = '─'
   wall = '│' 
