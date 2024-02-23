@@ -16,6 +16,14 @@ Then I thought what if I could see
 how much time I spent doing literally 
 anything else?
 
+## Dependencies 
+
+Require 
+
+* sqlite3
+
+* [cli-table](https://rubygems.org/gems/cli-table)
+
 ## Goals
 
 Planning on fleshing everything out 

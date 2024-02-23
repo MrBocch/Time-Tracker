@@ -1,4 +1,5 @@
 require 'sqlite3'
+require 'cli-table'
 
 def connectDB()
   # i learn this when i made the cli-dict 
@@ -85,6 +86,18 @@ def secToHM(seconds)
   return hours, minutes
 end
 
+def secToHM2(seconds)
+  hours, minutes = secToHM(seconds)
+
+  if hours == 0 
+    return "#{minutes} Minutes"
+  else
+    hs = ""
+    if hours == 1 then hs = "Hour" else hs = "Hours" end
+    return "#{hours} #{hs}, #{minutes} Minutes"
+  end
+end
+
 def stats()
   db = connectDB()
   rows = db.execute("SELECT * FROM act")
@@ -95,85 +108,15 @@ def stats()
     return
   end
 
-  0.upto(rows.length() -1) do |i|
-    h, m = secToHM(rows[i][2])
-    if h > 0
-      rows[i][2] = "#{h} Hours, #{m} Minutes"
-    else 
-      rows[i][2] = "#{m} Minutes"
-    end
+  t = Table.new ["id", "Activity", "Time"]
+  t.data = []
+  rows.each do |l|
+    temp = l[0..1] 
+    temp << secToHM2(l[2])
+    if temp != nil then t.data << temp end
   end
 
-  rpad_id = rows.max{|a, b| a[0].to_s.size <=> b[0].to_s.size}[0].to_s.length
-  rpad_id = [rpad_id, "id".length].max
-  rpad_act = rows.max{|a, b| a[1].size <=> b[1].size}[1].length
-  rpad_act = [rpad_act, "Activity".length].max
-  rpad_time = rows.max{|a, b| a[2].size <=> b[2].size}[2].length
-  rpad_time = [rpad_time, "Time".length].max
-
-  id = "id".center(rpad_id, " ")
-  activity = "Activity".center(rpad_act, " ")
-  time = "Time".center(rpad_time, " ")
- 
-  floor = '─'
-  wall = '│' 
-
-  id_col = "#{wall} #{id} #{wall}"
-  activity_col = "#{activity} #{wall}"
-  time_col = "#{time} #{wall}"
-
-  tsign  = {:ut => '┴', :dt => '┬', :rt => '├', :lt => '┤', :cross => '┼'}
-  corner = {:tr => '┌', :tl => '┐', :br => '┘', :bl => '└'}
-  # this must be the worst code i have ever written in my life
-  # sorrow to those that lay their eyes upon it
-  uheader = (id_col).split("").map{|c| floor}.join("")
-  uheader[0] = corner[:tr]
-  uheader[-1] = corner[:tl]
-
-  uheader += (activity_col).split("").map{|c| floor}.join("")
-  uheader[id_col.length-1] = tsign[:dt]
-  uheader += tsign[:dt]
-
-  uheader += (time_col).split("").map{|c| floor}.join("")
-  uheader += corner[:tl]
-
-  dheader = (id_col).split("").map{|c| floor}.join("")
-  dheader[0] = tsign[:rt]
-  dheader[-1] = tsign[:cross]
-
-  dheader += (activity_col).split("").map{|c| floor}.join("")
-  dheader += tsign[:cross]
-  
-  dheader += (time_col).split("").map{|c| floor}.join("")
-  dheader += tsign[:lt]
-
-  endtable = (id_col).split("").map{|c| floor}.join("")
-  endtable[0] = corner[:bl]
-  endtable[-1] = tsign[:ut]
-
-  endtable += (activity_col).split("").map{|c| floor}.join("")
-  endtable += tsign[:ut]
-
-  endtable += (time_col).split("").map{|c| floor}.join("")
-  endtable += corner[:br]
-
-  header = "#{id_col} #{activity_col} #{time_col}" 
-
-  # print the top part of table 
-  puts uheader 
-  puts header
-  puts dheader
-  # print part of table right below header
-
-  rows.each do |row|
-    id = row[0].to_s.ljust(rpad_id, " ")
-    act = row[1].ljust(rpad_act, " ") # so cool
-    time = row[2].ljust(rpad_time, " ")
-    # h, m = secToHM(row[2])
-
-    puts "#{wall} #{id} #{wall} #{act} #{wall} #{time} #{wall}"
-  end
-  puts endtable
+  t.printTable
 
 end
 
