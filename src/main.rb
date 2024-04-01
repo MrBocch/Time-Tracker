@@ -34,18 +34,26 @@ def newAct()
   db.close
 end
 
-# so funny i get to use this from
-# my own gist
-# https://gist.github.com/MrBocch/e07e7397005a1c261d77520d7d2a7eee
-def getTime
-  print "Hours: "
-  h = gets.chomp!.to_i
-  print "Minutes: "
-  m = gets.chomp!.to_i
-  print "Seconds: "
-  s = gets.chomp!.to_i
-  # returns total time in seconds
-  return s + (m*60) + (h*3600)
+def stats()
+  db = connectDB()
+  rows = db.execute("SELECT * FROM act")
+  db.close
+
+  if rows.empty?
+    puts "Please enter an activity first"
+    return
+  end
+
+  t = Table.new ["id", "Activity", "Time"]
+  t.data = []
+  rows.each do |l|
+    temp = l[0..1]
+    temp << secToHM2(l[2])
+    if temp != nil then t.data << temp end
+  end
+
+  t.printTable
+
 end
 
 def doing()
@@ -97,6 +105,21 @@ def doing()
   )
 
 end
+
+# so funny i get to use this from
+# my own gist
+# https://gist.github.com/MrBocch/e07e7397005a1c261d77520d7d2a7eee
+def getTime
+  print "Hours: "
+  h = gets.chomp!.to_i
+  print "Minutes: "
+  m = gets.chomp!.to_i
+  print "Seconds: "
+  s = gets.chomp!.to_i
+  # returns total time in seconds
+  return s + (m*60) + (h*3600)
+end
+
 def secToHM(seconds)
   hours = seconds / 3600
   restm = seconds % 3600
@@ -116,27 +139,6 @@ def secToHM2(seconds)
   end
 end
 
-def stats()
-  db = connectDB()
-  rows = db.execute("SELECT * FROM act")
-  db.close
-
-  if rows.empty?
-    puts "Please enter an activity first"
-    return
-  end
-
-  t = Table.new ["id", "Activity", "Time"]
-  t.data = []
-  rows.each do |l|
-    temp = l[0..1]
-    temp << secToHM2(l[2])
-    if temp != nil then t.data << temp end
-  end
-
-  t.printTable
-
-end
 
 initDB()
 stay = true
