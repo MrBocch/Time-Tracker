@@ -22,6 +22,7 @@ def initDB()
 end
 
 def newAct()
+  stats()
   puts "Enter name of new activity"
   puts "Make sure its not already in db"
   print "> "
@@ -59,13 +60,12 @@ end
 def doing()
   puts "What do you want to do?"
   puts "Select by id"
-
   stats()
+  print "> "
 
   # prevent people from insert wrong thing
   id = gets().chomp().to_i
 
-  # pomodoro thing
   puts "Would like to do stopwatch thing (s)"
   puts "Or Insert time manually? (m)"
   print "> "
