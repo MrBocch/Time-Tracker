@@ -91,7 +91,7 @@ def doing()
     end
     until stop do
       puts "Enter (q) to exit"
-      puts "#{seconds / 3600}:#{seconds / 60}:#{seconds % 60}"
+      puts "#{seconds / 3600}:#{(seconds / 60) % 60}:#{seconds % 60}"
       sleep(1)
       system("clear") # wont work on windows
       seconds += 1
