@@ -2,7 +2,7 @@ require 'sqlite3'
 require 'cli-table'
 
 def connectDB()
-  # i learn this when i made the cli-dict 
+  # i learn this when i made the cli-dict
   currentDir = __dir__
   db_path = File.join(currentDir, "time.db")
   return SQLite3::Database.open db_path
@@ -14,7 +14,7 @@ def initDB()
     CREATE TABLE IF NOT EXISTS act(
       id   INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT NOT NULL,
-      time INT 
+      time INT
     );"
   )
 
@@ -31,11 +31,11 @@ def newAct()
   db.execute("INSERT INTO act (name, time)
               VALUES (?, ?)", [name, 0])
 
-  db.close 
+  db.close
 end
 
 # so funny i get to use this from
-# my own gist 
+# my own gist
 # https://gist.github.com/MrBocch/e07e7397005a1c261d77520d7d2a7eee
 def getTime
   print "Hours: "
@@ -58,38 +58,56 @@ def doing()
   id = gets().chomp().to_i
 
   # pomodoro thing
-  puts "Would like to do pomodoro thing (p)"
+  puts "Would like to do stopwatch thing (s)"
   puts "Or Insert time manually? (m)"
   print "> "
   choice = gets.chomp
-  time = 0
   # check if people insert incorrect thing
   if choice == 'm'
-    time = getTime() 
+    time = getTime()
   end
-  if choice == 'p'
-    # TODO
+
+  time = 0
+  stop = false
+  if choice == 's'
+    seconds = 0
+    Thread.new do
+      s = ""
+      loop do
+        s = gets()
+        if s.chomp == "q"
+          stop = true
+          break
+        end
+      end
+    end
+    until stop do
+      puts "Enter (q) to exit"
+      puts seconds
+      sleep(1)
+      #system("clear") # wont work on windows
+      seconds += 1
+    end
   end
 
   db = connectDB()
-  db.execute("UPDATE act 
+  db.execute("UPDATE act
               SET time = time + #{time}
               WHERE id = #{id};"
   )
 
 end
-
 def secToHM(seconds)
   hours = seconds / 3600
   restm = seconds % 3600
-  minutes = restm / 60 
+  minutes = restm / 60
   return hours, minutes
 end
 
 def secToHM2(seconds)
   hours, minutes = secToHM(seconds)
 
-  if hours == 0 
+  if hours == 0
     return "#{minutes} Minutes"
   else
     hs = ""
@@ -103,7 +121,7 @@ def stats()
   rows = db.execute("SELECT * FROM act")
   db.close
 
-  if rows.empty? 
+  if rows.empty?
     puts "Please enter an activity first"
     return
   end
@@ -111,7 +129,7 @@ def stats()
   t = Table.new ["id", "Activity", "Time"]
   t.data = []
   rows.each do |l|
-    temp = l[0..1] 
+    temp = l[0..1]
     temp << secToHM2(l[2])
     if temp != nil then t.data << temp end
   end
@@ -121,8 +139,8 @@ def stats()
 end
 
 initDB()
-stay = true 
-while stay do 
+stay = true
+while stay do
   puts "\n"
   puts "(1) New Activity"
   puts "(2) List Stats"
@@ -133,7 +151,7 @@ while stay do
   input = gets().chomp().to_i
   puts "\n"
 
-  case input  
+  case input
   in 1
     newAct()
   in 2
@@ -144,6 +162,6 @@ while stay do
     stay = false
   else
     puts "Dont recognize that\n\n"
-
   end
+
 end
