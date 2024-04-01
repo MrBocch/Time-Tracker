@@ -71,11 +71,11 @@ def doing()
   print "> "
   choice = gets.chomp
   # check if people insert incorrect thing
+  time = 0
   if choice == 'm'
     time = getTime()
   end
 
-  time = 0
   stop = false
   if choice == 's'
     seconds = 0
@@ -91,11 +91,13 @@ def doing()
     end
     until stop do
       puts "Enter (q) to exit"
-      puts seconds
+      puts "#{seconds / 3600}:#{seconds / 60}:#{seconds % 60}"
       sleep(1)
-      #system("clear") # wont work on windows
+      system("clear") # wont work on windows
       seconds += 1
     end
+    # puts "seconds #{seconds} into db"
+    time = seconds
   end
 
   db = connectDB()
