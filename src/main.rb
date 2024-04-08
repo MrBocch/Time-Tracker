@@ -143,6 +143,14 @@ end
 
 
 initDB()
+
+banner = <<-EOL
+====================
+= Activity Tracker =
+====================
+EOL
+print(banner)
+
 stay = true
 while stay do
   puts "\n"
