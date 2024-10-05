@@ -46,14 +46,14 @@ def stats()
   end
 
   t = Table.new ["id", "Activity", "Time"]
-  t.data = []
+  t.rows= []
   rows.each do |l|
     temp = l[0..1]
     temp << secToHM2(l[2])
-    if temp != nil then t.data << temp end
+    if temp != nil then t.rows << temp end
   end
 
-  t.printTable
+  t.show
 
 end
 
