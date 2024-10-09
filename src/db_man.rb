@@ -27,5 +27,12 @@ module DB
       db.close
     end
 
+    def createAct(name)
+      db = DB::connect()
+      db.execute("INSERT INTO act (name, time)
+                  VALUES (?, ?)", [name, 0])
+
+      db.close
+    end
   end
 end

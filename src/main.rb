@@ -9,11 +9,8 @@ def newAct()
   print "> "
   name = gets().chomp
 
-  db = DB::connect()
-  db.execute("INSERT INTO act (name, time)
-              VALUES (?, ?)", [name, 0])
+  DB::createAct(name)
 
-  db.close
 end
 
 def stats()
