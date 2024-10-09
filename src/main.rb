@@ -1,25 +1,6 @@
 require 'sqlite3'
 require 'cli-table'
-
-def connectDB()
-  # i learn this when i made the cli-dict
-  currentDir = __dir__
-  db_path = File.join(currentDir, "time.db")
-  return SQLite3::Database.open db_path
-end
-
-def initDB()
-  db = connectDB()
-  db.execute("
-    CREATE TABLE IF NOT EXISTS act(
-      id   INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT NOT NULL,
-      time INT
-    );"
-  )
-
-  db.close
-end
+require_relative "#{__dir__}/db_man.rb"
 
 def newAct()
   stats()
@@ -28,7 +9,7 @@ def newAct()
   print "> "
   name = gets().chomp
 
-  db = connectDB()
+  db = DB::connect()
   db.execute("INSERT INTO act (name, time)
               VALUES (?, ?)", [name, 0])
 
@@ -36,7 +17,7 @@ def newAct()
 end
 
 def stats()
-  db = connectDB()
+  db = DB::connect()
   rows = db.execute("SELECT * FROM act")
   db.close
 
@@ -89,8 +70,9 @@ def doing()
         end
       end
     end
+
     until stop do
-      puts "Enter (q) to exit"
+      puts "Enter (q) to exit, (p) to pause"
       puts "#{seconds / 3600}:#{(seconds / 60) % 60}:#{seconds % 60}"
       sleep(1)
       system("clear") # wont work on windows
@@ -100,7 +82,7 @@ def doing()
     time = seconds
   end
 
-  db = connectDB()
+  db = DB::connect()
   db.execute("UPDATE act
               SET time = time + #{time}
               WHERE id = #{id};"
@@ -142,7 +124,7 @@ def secToHM2(seconds)
 end
 
 
-initDB()
+DB::initDB()
 
 banner = <<-EOL
 ====================
