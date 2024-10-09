@@ -10,13 +10,10 @@ def newAct()
   name = gets().chomp
 
   DB::createAct(name)
-
 end
 
 def stats()
-  db = DB::connect()
-  rows = db.execute("SELECT * FROM act")
-  db.close
+  rows = DB::getStats()
 
   if rows.empty?
     puts "Please enter an activity first"

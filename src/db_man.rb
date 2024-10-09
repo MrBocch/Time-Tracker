@@ -8,10 +8,10 @@ module DB
     end
 
     def connect()
-        # i learn this when i made the cli-dict
-        currentDir = __dir__
-        db_path = File.join(currentDir, "time.db")
-        return SQLite3::Database.open db_path
+      # i learn this when i made the cli-dict
+      currentDir = __dir__
+      db_path = File.join(currentDir, "time.db")
+      return SQLite3::Database.open db_path
     end
 
     def initDB()
@@ -33,6 +33,13 @@ module DB
                   VALUES (?, ?)", [name, 0])
 
       db.close
+    end
+
+    def getStats()
+      db = DB::connect()
+      rows = db.execute("SELECT * FROM act")
+      db.close
+      return rows
     end
   end
 end
