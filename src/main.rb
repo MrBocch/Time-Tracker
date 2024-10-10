@@ -81,6 +81,7 @@ def doing()
               WHERE id = #{id};"
   )
 
+  db.close()
 end
 
 # so funny i get to use this from
