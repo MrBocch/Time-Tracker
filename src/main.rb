@@ -1,6 +1,6 @@
 require 'sqlite3'
 require 'cli-table'
-require_relative "#{__dir__}/db_man.rb"
+require_relative "#{__dir__}/DB.rb"
 
 def newAct()
   stats()
@@ -29,7 +29,6 @@ def stats()
   end
 
   t.show
-
 end
 
 def doing()
