@@ -16,8 +16,15 @@ def initDB()
     );"
   )
 
-  # i need to really sit down and think how
-  # to design this table, other wise it going to be a pain in the future
+  db.execute("
+    CREATE TABLE IF NOT EXISTS log_acts(
+      log_id INTEGER PRIMARY KEY AUTOINCREMENT,
+      act_id TEXT NOT NULL,
+
+      FOREIGN KEY (act_id) REFERENCES acts(act_id)
+    );"
+  )
+
 
   db.close
 end
