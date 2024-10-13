@@ -19,11 +19,13 @@ def initDB()
   db.execute("
     CREATE TABLE IF NOT EXISTS log_acts(
       log_id INTEGER PRIMARY KEY AUTOINCREMENT,
-      act_id TEXT NOT NULL,
-
+      act_id INTEGER NOT NULL,
+      act_start TEXT NOT NULL,
+      act_end TEXT NOT NULL,
+      seconds INTEGER NOT NULL,
       FOREIGN KEY (act_id) REFERENCES acts(act_id)
     );"
-  )
+  ) # im thinking just calculate manually the seconds that have passed, integer or real number?
 
 
   db.close
@@ -50,6 +52,9 @@ def testtime
   ", [end_act, start_act])
 
   p tx
+end
+
+def insertAct()
 end
 
 initDB
