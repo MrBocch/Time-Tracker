@@ -1,29 +1,18 @@
 require "sqlite3"
+require_relative "#{__dir__}/schema.rb"
 
 class DB
-
-    def test
-      puts "hello world?"
-    end
 
     def self.connect()
       # i learn this when i made the cli-dict
       currentDir = __dir__
-      db_path = File.join(currentDir, "time.db")
+      #db_path = File.join(currentDir, "time.db")
+      db_path = File.join(currentDir, "test.db")
       return SQLite3::Database.open db_path
     end
 
-    def self.initDB()
-      db = self.connect()
-      db.execute("
-        CREATE TABLE IF NOT EXISTS act(
-          id   INTEGER PRIMARY KEY AUTOINCREMENT,
-          name TEXT NOT NULL,
-          time INT
-        );"
-      )
-
-      db.close
+    def self.INIT()
+      schema()
     end
 
     def self.createAct(name)

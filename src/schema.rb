@@ -6,8 +6,7 @@ def connect()
   return SQLite3::Database.open db_path
 end
 
-
-def initDB()
+def schema()
   db = connect()
   db.execute("
     CREATE TABLE IF NOT EXISTS acts(
@@ -54,10 +53,8 @@ def testtime
   p tx
 end
 
-def insertAct()
-end
 
-initDB
-testtime
+#initDB
+#testtime
 "2024-10-11 13:59:15"
 "2024-10-11 13:59:18"

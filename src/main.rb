@@ -118,7 +118,7 @@ def secToHM2(seconds)
 end
 
 
-DB::initDB()
+DB::INIT()
 
 banner = <<-EOL
 ====================
