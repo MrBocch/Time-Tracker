@@ -3,7 +3,8 @@ require 'cli-table'
 require_relative "#{__dir__}/DB.rb"
 
 def newAct()
-  stats()
+  showActs()
+
   puts "Enter name of new activity"
   puts "Make sure its not already in db"
   print "> "
@@ -12,21 +13,22 @@ def newAct()
   DB::createAct(name)
 end
 
-def stats()
-  rows = DB::getStats()
+def showActs()
+  rows = DB::allActs()
 
   if rows.empty?
     puts "Please enter an activity first"
     return
   end
 
-  t = Table.new ["id", "Activity", "Time"]
-  t.rows= []
-  rows.each do |l|
-    temp = l[0..1]
-    temp << secToHM2(l[2])
-    if temp != nil then t.rows << temp end
-  end
+  t = Table.new ["id", "Activity"]
+  t.rows = rows
+  # this code was for displaying the seconds column to H:M:S
+  # rows.each do |l|
+    # temp = l[0..1]
+    # temp << secToHM2(l[2])
+    # if temp != nil then t.rows << temp end
+    # end
 
   t.show
 end

@@ -17,15 +17,15 @@ class DB
 
     def self.createAct(name)
       db = self.connect()
-      db.execute("INSERT INTO act (name, time)
-                  VALUES (?, ?)", [name, 0])
+      db.execute("INSERT INTO acts (act_name)
+                  VALUES (?)", [name])
 
       db.close
     end
 
-    def self.getStats()
+    def self.allActs()
       db = self.connect()
-      rows = db.execute("SELECT * FROM act")
+      rows = db.execute("SELECT * FROM acts")
       db.close
       return rows
     end
