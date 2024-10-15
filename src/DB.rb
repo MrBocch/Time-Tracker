@@ -29,4 +29,21 @@ class DB
       db.close
       return rows
     end
+
+    def self.createLog(id, act_start, act_end, seconds)
+      db = self.connect()
+      db.execute("
+        INSERT INTO log_acts (act_id, act_start, act_end, seconds)
+        VALUES (?, ?, ?, ?);
+        ", [id, act_start, act_end, seconds])
+    end
+
+    def self.timeStamp()
+      db = self.connect()
+      stamp = db.execute("
+          SELECT datetime(CURRENT_TIMESTAMP, 'localtime');;
+      ").flatten[0]
+
+      return stamp
+    end
 end

@@ -36,12 +36,14 @@ end
 def doing()
   puts "What do you want to do?"
   puts "Select by id"
-  stats()
+  showActs()
   print "> "
 
   # prevent people from insert wrong thing
-  id = gets().chomp().to_i
+  act_id = gets().chomp().to_i
 
+  # the stop thing, does not quite work anymore
+  # because of the schema, no start/end time
   puts "Would like to do stopwatch thing (s)"
   puts "Or Insert time manually? (m)"
   print "> "
@@ -54,6 +56,8 @@ def doing()
 
   stop = false
   if choice == 's'
+    act_start = DB::timeStamp
+
     seconds = 0
     Thread.new do
       s = ""
@@ -76,14 +80,10 @@ def doing()
     # puts "seconds #{seconds} into db"
     time = seconds
   end
+  act_end = DB::timeStamp
 
-  db = DB::connect()
-  db.execute("UPDATE act
-              SET time = time + #{time}
-              WHERE id = #{id};"
-  )
+  DB::createLog(act_id, act_start, act_end, time)
 
-  db.close()
 end
 
 # so funny i get to use this from
@@ -121,7 +121,6 @@ end
 
 
 DB::INIT()
-
 banner = <<-EOL
 ====================
 = Activity Tracker =
@@ -145,7 +144,7 @@ while stay do
   in 1
     newAct()
   in 2
-    stats()
+    showActs() # i want to make a view that displays, | Activity | Total Time |
   in 3
     doing()
   in 4

@@ -26,6 +26,7 @@ def schema()
     );"
   ) # im thinking just calculate manually the seconds that have passed, integer or real number?
 
+  # db.execute("CREATE VIEW IF NOT EXISTS v_act_time);")
 
   db.close
 end
