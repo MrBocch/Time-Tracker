@@ -1,4 +1,4 @@
-require 'sqlite3'
+require 'cli-table'
 require_relative "#{__dir__}/DB.rb"
 
 def newAct()
