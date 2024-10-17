@@ -1,5 +1,4 @@
 require 'sqlite3'
-require 'cli-table'
 require_relative "#{__dir__}/DB.rb"
 
 def newAct()
@@ -23,12 +22,6 @@ def showActs()
 
   t = Table.new ["id", "Activity"]
   t.rows = rows
-  # this code was for displaying the seconds column to H:M:S
-  # rows.each do |l|
-    # temp = l[0..1]
-    # temp << secToHM2(l[2])
-    # if temp != nil then t.rows << temp end
-    # end
 
   t.show
 end
