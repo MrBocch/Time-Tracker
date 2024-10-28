@@ -1,13 +1,8 @@
 require "sqlite3"
-
-def connect()
-  currentDir = __dir__
-  db_path = File.join(currentDir, "test.db")
-  return SQLite3::Database.open db_path
-end
+require_relative "#{__dir__}/DB.rb"
 
 def schema()
-  db = connect()
+  db = DB::connect
   db.execute("
     CREATE TABLE IF NOT EXISTS acts(
       act_id   INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -55,7 +50,5 @@ def testtime
 end
 
 
-#initDB
-#testtime
-"2024-10-11 13:59:15"
-"2024-10-11 13:59:18"
+#sqlite> SELECT act_name AS Activity, SUM(seconds) AS "Total Time"
+   #...> FROM acts, log_acts;
