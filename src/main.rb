@@ -45,6 +45,7 @@ def doing()
   time = 0
   if choice == 'm'
     time = getTime()
+    DB::createLog(act_id, nil, nil, time)
   end
 
   stop = false
