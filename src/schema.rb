@@ -19,8 +19,8 @@ def schema()
     CREATE TABLE IF NOT EXISTS log_acts(
       log_id INTEGER PRIMARY KEY AUTOINCREMENT,
       act_id INTEGER NOT NULL,
-      act_start TEXT NOT NULL,
-      act_end TEXT NOT NULL,
+      act_start TEXT,
+      act_end TEXT,
       seconds INTEGER NOT NULL,
       FOREIGN KEY (act_id) REFERENCES acts(act_id)
     );"
