@@ -21,7 +21,14 @@ def schema()
     );"
   ) # im thinking just calculate manually the seconds that have passed, integer or real number?
 
-  # db.execute("CREATE VIEW IF NOT EXISTS v_act_time);")
+  # this is wrong
+  db.execute("
+  CREATE VIEW IF NOT EXISTS
+  total_time_per_activity AS
+  SELECT act_name AS Activity, SUM(seconds) AS 'Total Time'
+  FROM acts, log_acts
+  ;"
+  )
 
   db.close
 end

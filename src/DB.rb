@@ -23,13 +23,6 @@ class DB
       db.close
     end
 
-    def self.allActs()
-      db = self.connect()
-      rows = db.execute("SELECT * FROM acts")
-      db.close
-      return rows
-    end
-
     def self.createLog(id, act_start, act_end, seconds)
       db = self.connect()
       db.execute("
@@ -46,4 +39,20 @@ class DB
 
       return stamp
     end
+
+    def self.allActs()
+      db = self.connect()
+      rows = db.execute("SELECT * FROM acts")
+      db.close
+      return rows
+    end
+
+    def self.actsWithTime()
+        db = self.connect()
+        rows = db.execute("SELECT * FROM total_time_per_activity;")
+        # with if an activity is not in the act_log?
+        db.close
+        return rows
+    end
+
 end

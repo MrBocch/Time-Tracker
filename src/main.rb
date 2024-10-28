@@ -26,6 +26,12 @@ def showActs()
   t.show
 end
 
+def showStats()
+  table = Table.new []
+  data = DB::actsWithTime()
+  p data
+end
+
 def doing()
   puts "What do you want to do?"
   puts "Select by id"
@@ -138,7 +144,7 @@ while stay do
   in 1
     newAct()
   in 2
-    showActs() # i want to make a view that displays, | Activity | Total Time |
+    showStats()
   in 3
     doing()
   in 4
