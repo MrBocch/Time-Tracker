@@ -72,10 +72,10 @@ def doing()
     end
     # puts "seconds #{seconds} into db"
     time = seconds
+    act_end = DB::timeStamp
+    DB::createLog(act_id, act_start, act_end, time)
   end
-  act_end = DB::timeStamp
 
-  DB::createLog(act_id, act_start, act_end, time)
 
 end
 
