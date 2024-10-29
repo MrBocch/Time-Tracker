@@ -53,15 +53,14 @@ class DB
         rows = db.execute("
           SELECT
               a.act_name,
-              SUM(la.seconds) AS total_time
+              COALESCE(SUM(la.seconds), 0) AS total_time
           FROM
-              log_acts la
-          JOIN
-              acts a ON la.act_id = a.act_id
+              acts a
+          LEFT JOIN
+              log_acts la ON a.act_id = la.act_id
           GROUP BY
-              la.act_id
-        ;"
-        )
+              a.act_id
+        ;")
         # with if an activity is not in the act_log?
         db.close
         return rows
