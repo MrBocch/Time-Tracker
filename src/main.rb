@@ -27,9 +27,10 @@ def showActs()
 end
 
 def showStats()
-  table = Table.new []
-  data = DB::actsWithTime()
-  p data
+  table = Table.new ["Activty", "Total Time"]
+  table.rows = DB::actsWithTime()
+  table.rows.map!{|row| [row[0], secToHM2(row[1])] }
+  table.show
 end
 
 def doing()

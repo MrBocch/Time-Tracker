@@ -49,7 +49,19 @@ class DB
 
     def self.actsWithTime()
         db = self.connect()
-        rows = db.execute("SELECT * FROM total_time_per_activity;")
+        # i dont understand this, wtf is a, la ?
+        rows = db.execute("
+          SELECT
+              a.act_name,
+              SUM(la.seconds) AS total_time
+          FROM
+              log_acts la
+          JOIN
+              acts a ON la.act_id = a.act_id
+          GROUP BY
+              la.act_id
+        ;"
+        )
         # with if an activity is not in the act_log?
         db.close
         return rows
