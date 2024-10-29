@@ -1,6 +1,42 @@
 require 'cli-table'
 require_relative "#{__dir__}/DB.rb"
 
+DB::INIT()
+banner = <<-EOL
+====================
+= Activity Tracker =
+====================
+EOL
+print(banner)
+
+def main
+  stay = true
+  while stay do
+    puts "\n"
+    puts "(1) New Activity"
+    puts "(2) List Stats"
+    puts "(3) Do Activity"
+    puts "(4) Leave"
+
+    print "> "
+    input = gets().chomp().to_i
+    puts "\n"
+
+    case input
+    in 1
+      newAct()
+    in 2
+      showStats()
+    in 3
+      doing()
+    in 4
+      stay = false
+    else
+      puts "Dont recognize that\n\n"
+    end
+  end
+end
+
 def newAct()
   showActs()
 
@@ -120,38 +156,4 @@ def secToHM2(seconds)
   end
 end
 
-
-DB::INIT()
-banner = <<-EOL
-====================
-= Activity Tracker =
-====================
-EOL
-print(banner)
-
-stay = true
-while stay do
-  puts "\n"
-  puts "(1) New Activity"
-  puts "(2) List Stats"
-  puts "(3) Do Activity"
-  puts "(4) Leave"
-
-  print "> "
-  input = gets().chomp().to_i
-  puts "\n"
-
-  case input
-  in 1
-    newAct()
-  in 2
-    showStats()
-  in 3
-    doing()
-  in 4
-    stay = false
-  else
-    puts "Dont recognize that\n\n"
-  end
-
-end
+main
