@@ -55,7 +55,3 @@ def testtime
 
   p tx
 end
-
-
-#sqlite> SELECT act_name AS Activity, SUM(seconds) AS "Total Time"
-   #...> FROM acts, log_acts;

@@ -13,9 +13,9 @@ def main
   stay = true
   while stay do
     puts "\n"
-    puts "(1) New Activity"
-    puts "(2) List Stats"
-    puts "(3) Do Activity"
+    puts "(1) Do Activity"
+    puts "(2) New Activity"
+    puts "(3) List Stats"
     puts "(4) Leave"
 
     print "> "
@@ -24,11 +24,11 @@ def main
 
     case input
     in 1
-      newAct()
-    in 2
-      showStats()
-    in 3
       doing()
+    in 2
+      newAct()
+    in 3
+      showStats()
     in 4
       stay = false
     else
