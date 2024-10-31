@@ -6,8 +6,8 @@ class DB
     def self.connect()
       # i learn this when i made the cli-dict
       currentDir = __dir__
-      #db_path = File.join(currentDir, "time.db")
-      db_path = File.join(currentDir, "test.db")
+      db_path = File.join(currentDir, "logs/time.db")
+      # db_path = File.join(currentDir, "test.db")
       return SQLite3::Database.open db_path
     end
 
