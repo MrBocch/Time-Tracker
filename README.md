@@ -27,5 +27,5 @@ Require
 ## Goals
 
 Planning on fleshing everything out 
-here, once I consider it complete, will
+here, once I consider it complete will
 make it into a GUI app with [Tauri](https://tauri.app/)
