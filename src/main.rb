@@ -109,7 +109,7 @@ def doing()
 
     until stop do
       puts "Enter (q) to exit, (p) to pause"
-      puts "#{seconds / 3600}:#{(seconds / 60) % 60}:#{seconds % 60}"
+      puts "#{ (seconds / 3600).to_s.rjust(2, '0') }:#{ ((seconds / 60) % 60).to_s.rjust(2, '0') }:#{ (seconds % 60).to_s.rjust(2, '0') }"
       sleep(1)
       system("clear") # wont work on windows
       seconds += 1
