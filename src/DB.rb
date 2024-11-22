@@ -47,6 +47,12 @@ class DB
       return rows
     end
 
+    def self.actName(id)
+      db = self.connect()
+      row = db.execute("SELECT act_name FROM acts WHERE act_id = ?", id)
+      db.close
+      return row[0][0] # gracefully stop if act_id is nil
+    end
     def self.actsWithTime()
         db = self.connect()
         # i dont understand this, wtf is a, la ?
