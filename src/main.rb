@@ -99,7 +99,7 @@ def doing()
     Thread.new do
       s = ""
       loop do
-        s = gets()
+        s = gets().downcase
         if s.chomp == "q"
           stop = true
           break
