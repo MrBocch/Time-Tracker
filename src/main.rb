@@ -65,7 +65,7 @@ end
 def showStats()
   table = Table.new ["Activty", "Total Time"]
   table.rows = DB::actsWithTime()
-  table.rows.map!{|row| [row[0], secToHM2(row[1])] }
+  table.rows = table.rows.map{|row| [row[0], secToHM2(row[1])] }
   table.show
 end
 
